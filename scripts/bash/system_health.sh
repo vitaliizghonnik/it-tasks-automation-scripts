@@ -18,7 +18,7 @@ LOG_FILE="/var/log/system_health/system_health_$(date +%Y-%m-%d_%H-%M-%S).log"
 echo "=== Start Health Check: $(date) ===" >> $LOG_FILE
 
 # Check disk space
-echo -e "n--- Disk Space Usage ---" >> $LOG_FILE
+echo -e "\n--- Disk Space Usage ---" >> $LOG_FILE
 df -h | grep -v "tmpfs" >> $LOG_FILE 
 
 # Check memory usage (available memory space)
@@ -36,8 +36,8 @@ if command -v apt > /dev/null; then
 fi
 
 # Check for running SSH, openvpn services		
-echo -e "\n--- Service Status ---" >> LOG_FILE
+echo -e "\n--- Service Status ---" >> $LOG_FILE
 systemctl status sshd | grep Active >> $LOG_FILE
-# systemctl status openvpn-server@server | grep Active >> $LOG_FILE
+systemctl status openvpn-server@server | grep Active >> $LOG_FILE
 
 echo -e "\n=== Health Check Complete ===\n" >> $LOG_FILE
